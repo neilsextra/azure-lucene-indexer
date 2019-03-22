@@ -27,5 +27,4 @@ namespace azure_lucene_indexer
         public float Score { get; set; }
     }
 
-    }
 }
