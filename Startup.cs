@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Threading.Tasks;
+using System.Collections.Specialized;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -30,9 +32,11 @@ namespace azure_lucene_indexer
             app.Run(async (context) =>
             {
                 string queryString = context.Request.QueryString.ToString();
+               
+                NameValueCollection parameters = HttpUtility.ParseQueryString(queryString);
 
-                await context.Response.WriteAsync("Swagger/Lucene/Example: " + queryString);
-                
+                await context.Response.WriteAsync("Swagger/Lucene/Example: " + parameters["name"]);
+
             });
         }
     }
