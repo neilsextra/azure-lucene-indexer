@@ -18,7 +18,11 @@ namespace azure_lucene_indexer
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            indexer = new LuceneIndexer("/home/lucene");
+            string directory = System.Environment.GetEnvironmentVariable("APPSETTING_directory");
+  
+            directory = directory ?? "c:\\temp\\Lucene";
+
+            indexer = new LuceneIndexer(directory);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -32,9 +36,13 @@ namespace azure_lucene_indexer
             app.Run(async (context) =>
             {
                 string queryString = context.Request.QueryString.ToString();
-               
-                NameValueCollection parameters = HttpUtility.ParseQueryString(queryString);
                 string directory = System.Environment.GetEnvironmentVariable("APPSETTING_directory");
+                directory = directory ?? "c:\\temp\\Lucene";
+
+                NameValueCollection parameters = HttpUtility.ParseQueryString(queryString);
+                
+                Console.WriteLine("Request method " + context.Request.Method);
+
                 await context.Response.WriteAsync("Swagger/Lucene/Example: " + directory + ":" + parameters["name"]);
 
             });
