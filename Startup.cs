@@ -11,10 +11,12 @@ namespace azure_lucene_indexer
 {
     public class Startup
     {
+        LuceneIndexer indexer;
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            indexer = new LuceneIndexer("/home/lucene");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -27,7 +29,7 @@ namespace azure_lucene_indexer
 
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync("Hello World!");
+                await context.Response.WriteAsync("Swagger/Lucene/Example");
             });
         }
     }
