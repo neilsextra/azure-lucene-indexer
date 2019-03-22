@@ -1,0 +1,14 @@
+C:\Users\nebrittl\projects\azure-lucene-indexer\bin\Debug\netcoreapp2.1\azure-lucene-indexer.deps.json
+C:\Users\nebrittl\projects\azure-lucene-indexer\bin\Debug\netcoreapp2.1\azure-lucene-indexer.runtimeconfig.json
+C:\Users\nebrittl\projects\azure-lucene-indexer\bin\Debug\netcoreapp2.1\azure-lucene-indexer.runtimeconfig.dev.json
+C:\Users\nebrittl\projects\azure-lucene-indexer\bin\Debug\netcoreapp2.1\azure-lucene-indexer.dll
+C:\Users\nebrittl\projects\azure-lucene-indexer\bin\Debug\netcoreapp2.1\azure-lucene-indexer.pdb
+C:\Users\nebrittl\projects\azure-lucene-indexer\obj\Debug\netcoreapp2.1\azure-lucene-indexer.csprojAssemblyReference.cache
+C:\Users\nebrittl\projects\azure-lucene-indexer\obj\Debug\netcoreapp2.1\azure-lucene-indexer.csproj.CoreCompileInputs.cache
+C:\Users\nebrittl\projects\azure-lucene-indexer\obj\Debug\netcoreapp2.1\azure-lucene-indexer.RazorAssemblyInfo.cache
+C:\Users\nebrittl\projects\azure-lucene-indexer\obj\Debug\netcoreapp2.1\azure-lucene-indexer.RazorAssemblyInfo.cs
+C:\Users\nebrittl\projects\azure-lucene-indexer\obj\Debug\netcoreapp2.1\azure-lucene-indexer.AssemblyInfoInputs.cache
+C:\Users\nebrittl\projects\azure-lucene-indexer\obj\Debug\netcoreapp2.1\azure-lucene-indexer.AssemblyInfo.cs
+C:\Users\nebrittl\projects\azure-lucene-indexer\obj\Debug\netcoreapp2.1\azure-lucene-indexer.RazorTargetAssemblyInfo.cache
+C:\Users\nebrittl\projects\azure-lucene-indexer\obj\Debug\netcoreapp2.1\azure-lucene-indexer.dll
+C:\Users\nebrittl\projects\azure-lucene-indexer\obj\Debug\netcoreapp2.1\azure-lucene-indexer.pdb
