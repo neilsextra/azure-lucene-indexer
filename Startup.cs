@@ -43,7 +43,7 @@ namespace azure_lucene_indexer
                 
                 Console.WriteLine("Request method " + context.Request.Method);
 
-                await context.Response.WriteAsync("Swagger/Lucene/Example: " + directory + ":" + parameters["name"]);
+                await context.Response.WriteAsync("Swagger/Lucene/Example: " + directory + ":" + context.Request.Path + ":" + parameters["name"]);
 
             });
         }
