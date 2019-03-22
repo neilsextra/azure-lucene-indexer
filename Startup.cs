@@ -29,7 +29,10 @@ namespace azure_lucene_indexer
 
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync("Swagger/Lucene/Example");
+                string queryString = context.Request.QueryString.ToString();
+
+                await context.Response.WriteAsync("Swagger/Lucene/Example: " + queryString);
+                
             });
         }
     }
