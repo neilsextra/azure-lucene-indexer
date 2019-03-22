@@ -34,8 +34,8 @@ namespace azure_lucene_indexer
                 string queryString = context.Request.QueryString.ToString();
                
                 NameValueCollection parameters = HttpUtility.ParseQueryString(queryString);
-
-                await context.Response.WriteAsync("Swagger/Lucene/Example: " + parameters["name"]);
+                string directory = System.Environment.GetEnvironmentVariable("APPSETTING_directory");
+                await context.Response.WriteAsync("Swagger/Lucene/Example: " + directory + ":" + parameters["name"]);
 
             });
         }
