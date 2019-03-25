@@ -23,6 +23,7 @@ namespace azure_lucene_indexer
             directory = directory ?? "c:\\temp\\Lucene";
 
             indexer = new LuceneIndexer(directory);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,9 +44,15 @@ namespace azure_lucene_indexer
                 
                 Console.WriteLine("Request method " + context.Request.Method);
 
-                await context.Response.WriteAsync("Swagger/Lucene/Example: " + directory + ":" + context.Request.Path + ":" + parameters["name"]);
+                if (context.Request.Method.Equals("/add")) {
+                    indexer.AddIndexEntry(parameters["id"], parameters["name"]);
+                    await context.Response.WriteAsync("Swagger/Lucene/Example: (Add) " + directory + ":" + context.Request.Path + ":" + parameters["name"]);
+                } else {
+                    await context.Response.WriteAsync("Swagger/Lucene/Example: " + directory + ":" + context.Request.Path + ":" + parameters["name"]);
+                }
 
             });
+            
         }
     }
 }
