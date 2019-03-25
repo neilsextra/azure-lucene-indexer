@@ -48,11 +48,11 @@ namespace azure_lucene_indexer
                     indexer.AddIndexEntry(parameters["id"], parameters["name"]);
                     await context.Response.WriteAsync("Swagger/Lucene/Example: (Add) " + directory + ":" + context.Request.Path + ":" + parameters["name"]);
                 } else {
-                    await context.Response.WriteAsync("Swagger/Lucene/Example: " + directory + ":" + context.Request.Path + ":" + parameters["name"]);
+                    await context.Response.WriteAsync("Swagger/Lucene/Example: (Command)" + directory + ":" + context.Request.Path + ":" + parameters["name"]);
                 }
 
             });
-            
+
         }
     }
 }
