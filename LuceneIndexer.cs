@@ -71,7 +71,7 @@ namespace azure_lucene_indexer
 
         }
 
-        public IEnumerable<IndexEntry> Search(string term)
+        public IndexEntry[] Search(string term)
         {
             IndexSearcher searcher = new IndexSearcher(luceneIndexDirectory);
 
@@ -80,8 +80,8 @@ namespace azure_lucene_indexer
 
 
             var hits = searcher.Search(query, MAX_HITS).ScoreDocs;
-            var results = hits.Select(hit => MapDocument(hit, searcher.Doc(hit.Doc))).ToList();
-
+            var results = hits.Select(hit => MapDocument(hit, searcher.Doc(hit.Doc))).ToArray();
+     
             return results;
 
         }

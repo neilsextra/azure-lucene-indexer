@@ -1,8 +1,11 @@
 ﻿using System;
+using System.IO;
+using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Threading.Tasks;
+using System.Runtime.Serialization.Json;
 using System.Collections.Specialized;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -49,7 +52,13 @@ namespace azure_lucene_indexer
                     await context.Response.WriteAsync("Swagger/Lucene/Example: (Add) " + directory + ":" + context.Request.Path + ":" + parameters["name"]);
                 } else if (context.Request.Path.Equals("/get")) {
                     var result = indexer.Get(parameters["id"]);
-                    await context.Response.WriteAsync("Swagger/Lucene/Example: (Get) " + directory + ":" + context.Request.Path + ":" + parameters["name"] + ":" + result.Name);
+                    var output = SerializeIndexItem(result);
+                    await context.Response.WriteAsync("Swagger/Lucene/Example: (Get) " + directory + ":" + context.Request.Path + ":" + parameters["id"] + ":" + output);
+                } else if (context.Request.Path.Equals("/search")) {
+                    var result = indexer.Search(parameters["name"]);
+                    var output = SerializeIndexItems(result);
+    
+                    await context.Response.WriteAsync("Swagger/Lucene/Example: (Search) " + directory + ":" + context.Request.Path + ":" + parameters["name"] + ":" + output);
                 } else {
                     await context.Response.WriteAsync("Swagger/Lucene/Example: (Command)" + directory + ":" + context.Request.Path + ":" + parameters["name"]);
                 }
@@ -57,5 +66,30 @@ namespace azure_lucene_indexer
             });
 
         }
+
+        private String SerializeIndexItem(IndexEntry indexEntry) {
+            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(IndexEntry));
+
+            using (MemoryStream stream = new MemoryStream()) {
+                serializer.WriteObject(stream, indexEntry);
+
+                return Encoding.Default.GetString(stream.ToArray());
+
+            }
+
+        }
+
+        private String SerializeIndexItems(IndexEntry[] indexEntries) {
+            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(IndexEntry[]));
+
+            using (MemoryStream stream = new MemoryStream()) {
+                serializer.WriteObject(stream, indexEntries);
+
+                return Encoding.Default.GetString(stream.ToArray());
+
+            }
+
+        }
+
     }
 }
