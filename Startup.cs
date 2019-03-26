@@ -66,7 +66,7 @@ namespace azure_lucene_indexer
                 } else if (context.Request.Path.Equals("/delete")) {
                     indexer.Delete(parameters["id"]);
 
-                    await context.Response.WriteAsync("(Deleted Index Entry) " + directory + ":" + context.Request.Path + ":" + parameters["name"]);
+                    await context.Response.WriteAsync("(Deleted Index Entry) " + directory + ":" + context.Request.Path + ":" + parameters["id"]);
 
                 } else if (context.Request.Path.Equals("/search")) {
                     var result = indexer.Search(parameters["name"]);
