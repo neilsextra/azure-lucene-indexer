@@ -47,13 +47,23 @@ namespace azure_lucene_indexer
                 
                 Console.WriteLine("Request method " + context.Request.Method);
 
-                if (context.Request.Path.Equals("/add")) {
+                if (context.Request.Path.Equals("/put")) {
                     indexer.AddIndexEntry(parameters["id"], parameters["name"]);
-                    await context.Response.WriteAsync("Swagger/Lucene/Example: (Add) " + directory + ":" + context.Request.Path + ":" + parameters["name"]);
-                } else if (context.Request.Path.Equals("/get")) {
+                    await context.Response.WriteAsync("(Add Index Entry) " + directory + ":" + context.Request.Path + ":" + parameters["name"]);
+                } else if (context.Request.Path.Equals("/Put")) {
                     var result = indexer.Get(parameters["id"]);
-                    var output = SerializeIndexItem(result);
-                    await context.Response.WriteAsync(output);
+
+                    if (result != null) {
+                        var output = SerializeIndexItem(result);
+                        await context.Response.WriteAsync(output);
+                    } else {
+                        HttpResponse response = context.Response;
+
+                        response.StatusCode = 401;
+                        await response.WriteAsync(parameters["id"] + ": Not Found");
+
+                    }
+
                 } else if (context.Request.Path.Equals("/search")) {
                     var result = indexer.Search(parameters["name"]);
                     var output = SerializeIndexItems(result);
