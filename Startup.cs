@@ -53,12 +53,11 @@ namespace azure_lucene_indexer
                 } else if (context.Request.Path.Equals("/get")) {
                     var result = indexer.Get(parameters["id"]);
                     var output = SerializeIndexItem(result);
-                    await context.Response.WriteAsync("Swagger/Lucene/Example: (Get) " + directory + ":" + context.Request.Path + ":" + parameters["id"] + ":" + output);
+                    await context.Response.WriteAsync(output);
                 } else if (context.Request.Path.Equals("/search")) {
                     var result = indexer.Search(parameters["name"]);
                     var output = SerializeIndexItems(result);
-    
-                    await context.Response.WriteAsync("Swagger/Lucene/Example: (Search) " + directory + ":" + context.Request.Path + ":" + parameters["name"] + ":" + output);
+                    await context.Response.WriteAsync(output);
                 } else {
                     await context.Response.WriteAsync("Swagger/Lucene/Example: (Command)" + directory + ":" + context.Request.Path + ":" + parameters["name"]);
                 }
