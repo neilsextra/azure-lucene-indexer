@@ -49,8 +49,8 @@ namespace azure_lucene_indexer
 
                 if (context.Request.Path.Equals("/put")) {
                     indexer.AddIndexEntry(parameters["id"], parameters["name"]);
-                    await context.Response.WriteAsync("(Add Index Entry) " + directory + ":" + context.Request.Path + ":" + parameters["name"]);
-                } else if (context.Request.Path.Equals("/Put")) {
+                    await context.Response.WriteAsync("(Put Index Entry) " + directory + ":" + context.Request.Path + ":" + parameters["name"]);
+                } else if (context.Request.Path.Equals("/get")) {
                     var result = indexer.Get(parameters["id"]);
 
                     if (result != null) {
@@ -63,6 +63,10 @@ namespace azure_lucene_indexer
                         await response.WriteAsync(parameters["id"] + ": Not Found");
 
                     }
+                } else if (context.Request.Path.Equals("/delete")) {
+                    indexer.Delete(parameters["id"]);
+
+                    await context.Response.WriteAsync("(Deleted Index Entry) " + directory + ":" + context.Request.Path + ":" + parameters["name"]);
 
                 } else if (context.Request.Path.Equals("/search")) {
                     var result = indexer.Search(parameters["name"]);

@@ -43,7 +43,7 @@ namespace azure_lucene_indexer
 
         }
 
-        public void AddIndexEntries(IEnumerable<IndexEntry> indexEntries)
+        public void AddIndexEntries(IndexEntry[] indexEntries)
         {
             foreach (var indexEntry in indexEntries)
             {
@@ -59,6 +59,15 @@ namespace azure_lucene_indexer
 
         }
 
+       public void Delete(string id)
+       {
+
+            indexWriter.DeleteDocuments(new Term("Id", id));
+            indexWriter.Optimize();
+            indexWriter.Flush(true, true, true);
+            indexWriter.Commit();
+
+       }
         public IndexEntry Get(string id)
         {
             IndexSearcher searcher = new IndexSearcher(luceneIndexDirectory);
