@@ -68,6 +68,7 @@ namespace azure_lucene_indexer
             indexWriter.Commit();
 
        }
+       
         public IndexEntry Get(string id)
         {
             IndexSearcher searcher = new IndexSearcher(luceneIndexDirectory);

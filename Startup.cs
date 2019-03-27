@@ -47,32 +47,50 @@ namespace azure_lucene_indexer
                 
                 Console.WriteLine("Request method " + context.Request.Method);
 
-                if (context.Request.Path.Equals("/put")) {
+                if (context.Request.Path.Equals("/put")) 
+                {
+                    if (parameters["id"] == null || parameters["name"] == null) {
+
+                    }
+                    else 
+                    {
                     indexer.AddIndexEntry(parameters["id"], parameters["name"]);
                     await context.Response.WriteAsync("(Put Index Entry) " + directory + ":" + context.Request.Path + ":" + parameters["name"]);
-                } else if (context.Request.Path.Equals("/get")) {
+                    }
+                } 
+                else if (context.Request.Path.Equals("/get")) 
+                {
                     var result = indexer.Get(parameters["id"]);
 
-                    if (result != null) {
+                    if (result != null) 
+                    {
                         var output = SerializeIndexItem(result);
                         await context.Response.WriteAsync(output);
-                    } else {
+                    } 
+                    else 
+                    {
                         HttpResponse response = context.Response;
 
                         response.StatusCode = 401;
                         await response.WriteAsync(parameters["id"] + ": Not Found");
 
                     }
-                } else if (context.Request.Path.Equals("/delete")) {
+                }
+                else if (context.Request.Path.Equals("/delete")) 
+                {
                     indexer.Delete(parameters["id"]);
 
                     await context.Response.WriteAsync("(Deleted Index Entry) " + directory + ":" + context.Request.Path + ":" + parameters["id"]);
 
-                } else if (context.Request.Path.Equals("/search")) {
+                } 
+                else if (context.Request.Path.Equals("/search")) 
+                {
                     var result = indexer.Search(parameters["name"]);
                     var output = SerializeIndexItems(result);
                     await context.Response.WriteAsync(output);
-                } else {
+                } 
+                else 
+                {
                     await context.Response.WriteAsync("Swagger/Lucene/Example: (Command)" + directory + ":" + context.Request.Path + ":" + parameters["name"]);
                 }
 
@@ -83,7 +101,8 @@ namespace azure_lucene_indexer
         private String SerializeIndexItem(IndexEntry indexEntry) {
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(IndexEntry));
 
-            using (MemoryStream stream = new MemoryStream()) {
+            using (MemoryStream stream = new MemoryStream()) 
+            {
                 serializer.WriteObject(stream, indexEntry);
 
                 return Encoding.Default.GetString(stream.ToArray());
@@ -92,7 +111,8 @@ namespace azure_lucene_indexer
 
         }
 
-        private String SerializeIndexItems(IndexEntry[] indexEntries) {
+        private String SerializeIndexItems(IndexEntry[] indexEntries) 
+        {
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(IndexEntry[]));
 
             using (MemoryStream stream = new MemoryStream()) {
@@ -102,7 +122,50 @@ namespace azure_lucene_indexer
 
             }
 
+        }       
+        
+        private String SerializeIndexAction(IndexAction indexAction) 
+        {
+            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(IndexAction));
+
+            using (MemoryStream stream = new MemoryStream()) 
+            {
+                serializer.WriteObject(stream, indexAction);
+
+                return Encoding.Default.GetString(stream.ToArray());
+
+            }
+
+        }
+
+        private IndexAction createIndexAction(String operation, int status, String message)
+        {
+            IndexAction indexAction = new IndexAction();
+
+            indexAction.Operation = operation;
+            indexAction.Status = status;
+            
+            return indexAction;
+
+        }
+        private IndexAction createIndexAction(String operation, int status, String message, String id, String name)
+        {
+            IndexAction indexAction = new IndexAction();
+
+            indexAction.Operation = operation;
+            indexAction.Status = status;
+
+            IndexEntry indexEntry = new IndexEntry();
+
+            indexEntry.Id = id;
+            indexEntry.Name = name;
+
+            indexAction.Entry = indexEntry;
+
+            return indexAction;
+
         }
 
     }
+
 }

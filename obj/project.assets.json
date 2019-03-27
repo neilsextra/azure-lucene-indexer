@@ -14,6 +14,36 @@
           "lib/NET40/Lucene.Net.dll": {}
         }
       },
+      "Lucene.Net.Contrib/3.0.3": {
+        "type": "package",
+        "dependencies": {
+          "Lucene.Net": "3.0.3"
+        },
+        "compile": {
+          "lib/net40/Lucene.Net.Contrib.Analyzers.dll": {},
+          "lib/net40/Lucene.Net.Contrib.Core.dll": {},
+          "lib/net40/Lucene.Net.Contrib.FastVectorHighlighter.dll": {},
+          "lib/net40/Lucene.Net.Contrib.Highlighter.dll": {},
+          "lib/net40/Lucene.Net.Contrib.Memory.dll": {},
+          "lib/net40/Lucene.Net.Contrib.Queries.dll": {},
+          "lib/net40/Lucene.Net.Contrib.Regex.dll": {},
+          "lib/net40/Lucene.Net.Contrib.SimpleFacetedSearch.dll": {},
+          "lib/net40/Lucene.Net.Contrib.Snowball.dll": {},
+          "lib/net40/Lucene.Net.Contrib.SpellChecker.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Lucene.Net.Contrib.Analyzers.dll": {},
+          "lib/net40/Lucene.Net.Contrib.Core.dll": {},
+          "lib/net40/Lucene.Net.Contrib.FastVectorHighlighter.dll": {},
+          "lib/net40/Lucene.Net.Contrib.Highlighter.dll": {},
+          "lib/net40/Lucene.Net.Contrib.Memory.dll": {},
+          "lib/net40/Lucene.Net.Contrib.Queries.dll": {},
+          "lib/net40/Lucene.Net.Contrib.Regex.dll": {},
+          "lib/net40/Lucene.Net.Contrib.SimpleFacetedSearch.dll": {},
+          "lib/net40/Lucene.Net.Contrib.Snowball.dll": {},
+          "lib/net40/Lucene.Net.Contrib.SpellChecker.dll": {}
+        }
+      },
       "Microsoft.AspNet.WebApi.Client/5.2.6": {
         "type": "package",
         "dependencies": {
@@ -4400,6 +4430,76 @@
         "lib/NET40/Lucene.Net.pdb",
         "lucene.net.3.0.3.nupkg.sha512",
         "lucene.net.nuspec"
+      ]
+    },
+    "Lucene.Net.Contrib/3.0.3": {
+      "sha512": "Ombi1OTV0/t/ndxIhIfoJ+CPmlxYClfF5u+tAd11G+mK5tv9sxOdC6LK9gMdld09k3wbiPPWxEH/38S15EzRIQ==",
+      "type": "package",
+      "path": "lucene.net.contrib/3.0.3",
+      "files": [
+        ".signature.p7s",
+        "lib/net35/Lucene.Net.Contrib.Analyzers.XML",
+        "lib/net35/Lucene.Net.Contrib.Analyzers.dll",
+        "lib/net35/Lucene.Net.Contrib.Analyzers.pdb",
+        "lib/net35/Lucene.Net.Contrib.Core.XML",
+        "lib/net35/Lucene.Net.Contrib.Core.dll",
+        "lib/net35/Lucene.Net.Contrib.Core.pdb",
+        "lib/net35/Lucene.Net.Contrib.FastVectorHighlighter.dll",
+        "lib/net35/Lucene.Net.Contrib.FastVectorHighlighter.pdb",
+        "lib/net35/Lucene.Net.Contrib.FastVectorHighlighter.xml",
+        "lib/net35/Lucene.Net.Contrib.Highlighter.XML",
+        "lib/net35/Lucene.Net.Contrib.Highlighter.dll",
+        "lib/net35/Lucene.Net.Contrib.Highlighter.pdb",
+        "lib/net35/Lucene.Net.Contrib.Memory.XML",
+        "lib/net35/Lucene.Net.Contrib.Memory.dll",
+        "lib/net35/Lucene.Net.Contrib.Memory.pdb",
+        "lib/net35/Lucene.Net.Contrib.Queries.XML",
+        "lib/net35/Lucene.Net.Contrib.Queries.dll",
+        "lib/net35/Lucene.Net.Contrib.Queries.pdb",
+        "lib/net35/Lucene.Net.Contrib.Regex.dll",
+        "lib/net35/Lucene.Net.Contrib.Regex.pdb",
+        "lib/net35/Lucene.Net.Contrib.Regex.xml",
+        "lib/net35/Lucene.Net.Contrib.SimpleFacetedSearch.dll",
+        "lib/net35/Lucene.Net.Contrib.SimpleFacetedSearch.pdb",
+        "lib/net35/Lucene.Net.Contrib.SimpleFacetedSearch.xml",
+        "lib/net35/Lucene.Net.Contrib.Snowball.XML",
+        "lib/net35/Lucene.Net.Contrib.Snowball.dll",
+        "lib/net35/Lucene.Net.Contrib.Snowball.pdb",
+        "lib/net35/Lucene.Net.Contrib.SpellChecker.XML",
+        "lib/net35/Lucene.Net.Contrib.SpellChecker.dll",
+        "lib/net35/Lucene.Net.Contrib.SpellChecker.pdb",
+        "lib/net40/Lucene.Net.Contrib.Analyzers.XML",
+        "lib/net40/Lucene.Net.Contrib.Analyzers.dll",
+        "lib/net40/Lucene.Net.Contrib.Analyzers.pdb",
+        "lib/net40/Lucene.Net.Contrib.Core.XML",
+        "lib/net40/Lucene.Net.Contrib.Core.dll",
+        "lib/net40/Lucene.Net.Contrib.Core.pdb",
+        "lib/net40/Lucene.Net.Contrib.FastVectorHighlighter.dll",
+        "lib/net40/Lucene.Net.Contrib.FastVectorHighlighter.pdb",
+        "lib/net40/Lucene.Net.Contrib.FastVectorHighlighter.xml",
+        "lib/net40/Lucene.Net.Contrib.Highlighter.XML",
+        "lib/net40/Lucene.Net.Contrib.Highlighter.dll",
+        "lib/net40/Lucene.Net.Contrib.Highlighter.pdb",
+        "lib/net40/Lucene.Net.Contrib.Memory.XML",
+        "lib/net40/Lucene.Net.Contrib.Memory.dll",
+        "lib/net40/Lucene.Net.Contrib.Memory.pdb",
+        "lib/net40/Lucene.Net.Contrib.Queries.XML",
+        "lib/net40/Lucene.Net.Contrib.Queries.dll",
+        "lib/net40/Lucene.Net.Contrib.Queries.pdb",
+        "lib/net40/Lucene.Net.Contrib.Regex.dll",
+        "lib/net40/Lucene.Net.Contrib.Regex.pdb",
+        "lib/net40/Lucene.Net.Contrib.Regex.xml",
+        "lib/net40/Lucene.Net.Contrib.SimpleFacetedSearch.dll",
+        "lib/net40/Lucene.Net.Contrib.SimpleFacetedSearch.pdb",
+        "lib/net40/Lucene.Net.Contrib.SimpleFacetedSearch.xml",
+        "lib/net40/Lucene.Net.Contrib.Snowball.XML",
+        "lib/net40/Lucene.Net.Contrib.Snowball.dll",
+        "lib/net40/Lucene.Net.Contrib.Snowball.pdb",
+        "lib/net40/Lucene.Net.Contrib.SpellChecker.XML",
+        "lib/net40/Lucene.Net.Contrib.SpellChecker.dll",
+        "lib/net40/Lucene.Net.Contrib.SpellChecker.pdb",
+        "lucene.net.contrib.3.0.3.nupkg.sha512",
+        "lucene.net.contrib.nuspec"
       ]
     },
     "Microsoft.AspNet.WebApi.Client/5.2.6": {
@@ -11636,6 +11736,7 @@
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
       "Lucene.Net >= 3.0.3",
+      "Lucene.Net.Contrib >= 3.0.3",
       "Microsoft.AspNetCore.App >= 2.1.1",
       "Microsoft.NETCore.App >= 2.1.0",
       "System.Configuration.ConfigurationManager >= 4.5.0"
@@ -11686,6 +11787,10 @@
             "target": "Package",
             "version": "[3.0.3, )"
           },
+          "Lucene.Net.Contrib": {
+            "target": "Package",
+            "version": "[3.0.3, )"
+          },
           "Microsoft.AspNetCore.App": {
             "suppressParent": "All",
             "target": "Package",
@@ -11717,6 +11822,16 @@
       "warningLevel": 1,
       "message": "Package 'Lucene.Net 3.0.3' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.1'. This package may not be fully compatible with your project.",
       "libraryId": "Lucene.Net",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v2.1"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Lucene.Net.Contrib 3.0.3' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.1'. This package may not be fully compatible with your project.",
+      "libraryId": "Lucene.Net.Contrib",
       "targetGraphs": [
         ".NETCoreApp,Version=v2.1"
       ]
