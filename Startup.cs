@@ -50,13 +50,22 @@ namespace azure_lucene_indexer
                 if (context.Request.Path.Equals("/put")) 
                 {
                     if (parameters["id"] == null || parameters["name"] == null) {
+                        HttpResponse response = context.Response;
+
+                        response.StatusCode = 500;
+                        await response.WriteAsync("Missing Parameter must have [id, name]");
 
                     }
                     else 
                     {
-                    indexer.AddIndexEntry(parameters["id"], parameters["name"]);
-                    await context.Response.WriteAsync("(Put Index Entry) " + directory + ":" + context.Request.Path + ":" + parameters["name"]);
+                        indexer.AddIndexEntry(parameters["id"], parameters["name"]);
+
+                        IndexPutAction indexAction = createPutIndexAction(200, "[put] operation successful", 
+                                                                       parameters["id"], parameters["name"] );
+
+                        await context.Response.WriteAsync(SerializeIndexAction(indexAction));
                     }
+
                 } 
                 else if (context.Request.Path.Equals("/get")) 
                 {
@@ -80,8 +89,10 @@ namespace azure_lucene_indexer
                 {
                     indexer.Delete(parameters["id"]);
 
-                    await context.Response.WriteAsync("(Deleted Index Entry) " + directory + ":" + context.Request.Path + ":" + parameters["id"]);
+                    await context.Response.WriteAsync(SerializeIndexAction(
+                            createDeleteIndexAction(200, "[delete] operation succeful",parameters["id"])));
 
+                
                 } 
                 else if (context.Request.Path.Equals("/search")) 
                 {
@@ -91,7 +102,10 @@ namespace azure_lucene_indexer
                 } 
                 else 
                 {
-                    await context.Response.WriteAsync("Swagger/Lucene/Example: (Command)" + directory + ":" + context.Request.Path + ":" + parameters["name"]);
+                    HttpResponse response = context.Response;
+                    response.StatusCode = 500;
+ 
+                    await response.WriteAsync("Unknown command");
                 }
 
             });
@@ -124,9 +138,9 @@ namespace azure_lucene_indexer
 
         }       
         
-        private String SerializeIndexAction(IndexAction indexAction) 
+        private String SerializeIndexAction<T>(T indexAction) 
         {
-            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(IndexAction));
+            DataContractJsonSerializer serializer = new DataContractJsonSerializer(indexAction.GetType());
 
             using (MemoryStream stream = new MemoryStream()) 
             {
@@ -138,23 +152,14 @@ namespace azure_lucene_indexer
 
         }
 
-        private IndexAction createIndexAction(String operation, int status, String message)
+        private IndexPutAction createPutIndexAction(int status, String message, String id, String name)
         {
-            IndexAction indexAction = new IndexAction();
+            IndexPutAction indexAction = new IndexPutAction();
 
-            indexAction.Operation = operation;
+            indexAction.Operation = "put";
             indexAction.Status = status;
-            
-            return indexAction;
-
-        }
-        private IndexAction createIndexAction(String operation, int status, String message, String id, String name)
-        {
-            IndexAction indexAction = new IndexAction();
-
-            indexAction.Operation = operation;
-            indexAction.Status = status;
-
+            indexAction.Message = message;
+ 
             IndexEntry indexEntry = new IndexEntry();
 
             indexEntry.Id = id;
@@ -162,6 +167,19 @@ namespace azure_lucene_indexer
 
             indexAction.Entry = indexEntry;
 
+            return indexAction;
+
+        }
+
+        private IndexAction createDeleteIndexAction(int status, String message, String id)
+        {
+            IndexDeleteAction indexAction = new IndexDeleteAction();
+
+            indexAction.Operation = "delete";
+            indexAction.Status = status;
+            indexAction.Message = message;
+            indexAction.Id = id;
+   
             return indexAction;
 
         }

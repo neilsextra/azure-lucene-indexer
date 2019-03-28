@@ -26,9 +26,6 @@ namespace azure_lucene_indexer
         [DataMember(Name = "Message")]
         public string Message { get; set; }
 
-        [DataMember(Name = "Entry")]
-        public IndexEntry Entry { get; set; }
-
     }
 
 }
