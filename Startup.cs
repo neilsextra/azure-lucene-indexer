@@ -23,7 +23,7 @@ namespace azure_lucene_indexer
         {
             string directory = System.Environment.GetEnvironmentVariable("APPSETTING_directory");
   
-            directory = directory ?? "c:\\temp\\Lucene";
+            directory = directory ?? "c:\\temp\\Lucene_2";
 
             indexer = new LuceneIndexer(directory);
 
@@ -45,9 +45,7 @@ namespace azure_lucene_indexer
 
                 NameValueCollection parameters = HttpUtility.ParseQueryString(queryString);
                 
-                Console.WriteLine("Request method " + context.Request.Method);
-
-                if (context.Request.Path.Equals("/put")) 
+                if (context.Request.Path.Equals("/put") || context.Request.Method.Equals("PUT")) 
                 {
                     if (parameters["id"] == null || parameters["name"] == null) {
                         HttpResponse response = context.Response;
@@ -58,10 +56,10 @@ namespace azure_lucene_indexer
                     }
                     else 
                     {
-                        indexer.AddIndexEntry(parameters["id"], parameters["name"]);
+                        indexer.AddIndexEntry(parameters);
 
-                        IndexPutAction indexAction = createPutIndexAction(200, "[put] operation successful", 
-                                                                       parameters["id"], parameters["name"] );
+                        IndexPutAction indexAction = CreatePutIndexAction(200, "[put] operation successful",
+                         parameters);
 
                         await context.Response.WriteAsync(SerializeIndexAction(indexAction));
                     }
@@ -85,20 +83,32 @@ namespace azure_lucene_indexer
 
                     }
                 }
-                else if (context.Request.Path.Equals("/delete")) 
+                else if (context.Request.Path.Equals("/delete") || context.Request.Method.Equals("DELETE")) 
                 {
                     indexer.Delete(parameters["id"]);
 
                     await context.Response.WriteAsync(SerializeIndexAction(
-                            createDeleteIndexAction(200, "[delete] operation succeful",parameters["id"])));
+                            createDeleteIndexAction(200, "[delete] operation successful",parameters["id"])));
 
                 
                 } 
                 else if (context.Request.Path.Equals("/search")) 
                 {
-                    var result = indexer.Search(parameters["name"]);
-                    var output = SerializeIndexItems(result);
-                    await context.Response.WriteAsync(output);
+                    if (parameters["term"] == null) {
+                        HttpResponse response = context.Response;
+
+                        response.StatusCode = 500;
+                        await response.WriteAsync("Missing Parameter must have [term]");
+
+                    }
+                    else
+                    {
+
+                        var result = indexer.Search(parameters["term"]);
+                        var output = SerializeIndexItems(result);
+                        await context.Response.WriteAsync(output);
+                    }
+
                 } 
                 else 
                 {
@@ -152,7 +162,7 @@ namespace azure_lucene_indexer
 
         }
 
-        private IndexPutAction createPutIndexAction(int status, String message, String id, String name)
+        private IndexPutAction CreatePutIndexAction(int status, String message, NameValueCollection parameters)
         {
             IndexPutAction indexAction = new IndexPutAction();
 
@@ -162,8 +172,9 @@ namespace azure_lucene_indexer
  
             IndexEntry indexEntry = new IndexEntry();
 
-            indexEntry.Id = id;
-            indexEntry.Name = name;
+            indexEntry.Id = parameters["id"];
+            indexEntry.Name = parameters["name"];
+            indexEntry.Mobile = parameters["mobile"];
 
             indexAction.Entry = indexEntry;
 

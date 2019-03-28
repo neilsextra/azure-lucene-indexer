@@ -30,6 +30,11 @@ namespace azure_lucene_indexer
 
         public string Name { get; set; }
 
+        [DataMember(Name = "Mobile")]
+
+        public string Mobile { get; set; }
+
+
         [DataMember(Name = "Score")]
         public float Score { get; set; }
         

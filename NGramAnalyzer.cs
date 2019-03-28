@@ -7,7 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 
-namespace LuceneSearch.AzureLucene
+namespace azure_lucene_indexer
 {
     public class NGramAnalyzer : Analyzer
     {
