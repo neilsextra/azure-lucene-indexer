@@ -106,13 +106,34 @@ namespace azure_lucene_indexer
         /// <summary>
         /// Search the index entries given a term
         /// </summary>
+        /// <param name="field">Search Field</param>
         /// <param name="term">Search Term</param>
-        public IndexEntry[] Search(string term)
+        public IndexEntry[] Find(string field, string value)
         {
             IndexSearcher searcher = new IndexSearcher(luceneIndexDirectory);
 
-            QueryParser parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, "Name", analyzerWrapper);
-            Query query = parser.Parse(term.Trim());
+            QueryParser parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, field, analyzerWrapper);
+            Query query = parser.Parse(value.Trim());
+
+            var hits = searcher.Search(query, MAX_HITS).ScoreDocs;
+            var results = hits.Select(hit => MapDocument(hit, searcher.Doc(hit.Doc))).ToArray();
+     
+            return results;
+
+        }
+
+        /// <summary>
+        /// Search the index entries given a term
+        /// </summary>
+        /// <param name="term">Search Term</param>
+        public IndexEntry[] Search(string term)
+        {
+
+            IndexSearcher searcher = new IndexSearcher(luceneIndexDirectory);
+            MultiFieldQueryParser parser = new MultiFieldQueryParser(Lucene.Net.Util.Version.LUCENE_30, 
+                                                                     new string[] {"Name", "Mobile"},
+                                                                     analyzerWrapper);           
+            Query query = parser.Parse(term);
 
             var hits = searcher.Search(query, MAX_HITS).ScoreDocs;
             var results = hits.Select(hit => MapDocument(hit, searcher.Doc(hit.Doc))).ToArray();

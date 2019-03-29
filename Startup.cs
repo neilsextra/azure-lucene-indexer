@@ -92,6 +92,25 @@ namespace azure_lucene_indexer
 
                 
                 } 
+                else if (context.Request.Path.Equals("/find")) 
+                {
+                    if (parameters["field"] == null || parameters["term"] == null) {
+                        HttpResponse response = context.Response;
+
+                        response.StatusCode = 500;
+                        await response.WriteAsync("Missing Parameter must have [field] and [term]");
+
+                    }
+                    else
+                    {
+
+                        var result = indexer.Find(parameters["field"], parameters["term"]);
+                        var output = SerializeIndexItems(result);
+                        await context.Response.WriteAsync(output);
+
+                    }
+
+                } 
                 else if (context.Request.Path.Equals("/search")) 
                 {
                     if (parameters["term"] == null) {
@@ -107,10 +126,21 @@ namespace azure_lucene_indexer
                         var result = indexer.Search(parameters["term"]);
                         var output = SerializeIndexItems(result);
                         await context.Response.WriteAsync(output);
+
                     }
 
                 } 
-                else 
+                else if (context.Request.Path.Equals("/upload")) 
+                {                   
+                    Stream stream = context.Request.Body;
+                    using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
+                    {
+                         var data = reader.ReadToEnd();
+                         Console.WriteLine(data);
+                    }
+ 
+                }
+                else
                 {
                     HttpResponse response = context.Response;
                     response.StatusCode = 500;
