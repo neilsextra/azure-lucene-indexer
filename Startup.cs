@@ -88,7 +88,7 @@ namespace azure_lucene_indexer
                     indexer.Delete(parameters["id"]);
 
                     await context.Response.WriteAsync(SerializeIndexAction(
-                            createDeleteIndexAction(200, "[delete] operation successful",parameters["id"])));
+                            CreateDeleteIndexAction(200, "[delete] operation successful",parameters["id"])));
 
                 
                 } 
@@ -133,10 +133,30 @@ namespace azure_lucene_indexer
                 else if (context.Request.Path.Equals("/upload")) 
                 {                   
                     Stream stream = context.Request.Body;
-                    using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
+                    List<IndexEntry> putOperations = new List<IndexEntry>();
+
+                    HttpMultipartParser parser = new HttpMultipartParser(stream);
+                    foreach( MultiPartFile file in parser.Files)
                     {
-                         var data = reader.ReadToEnd();
-                         Console.WriteLine(data);
+                        var str = Encoding.ASCII.GetString(file.FileContents).Trim();
+
+                        Console.WriteLine("'" + str + "'");
+
+                        List<IndexOperation> operations = Deserialize<List<IndexOperation>>(str);
+
+                        foreach (IndexOperation operation in operations ) {
+                        
+                            putOperations.Add(operation.Entry);
+                        
+                        }
+
+                        indexer.AddIndexEntries(putOperations);
+
+                        await context.Response.WriteAsync(SerializeIndexAction(
+                            CreatBulkPutIndexAction(200, 
+                            "[bulk(put)] operation successful", 
+                            operations.Count)));
+
                     }
  
                 }
@@ -212,7 +232,7 @@ namespace azure_lucene_indexer
 
         }
 
-        private IndexAction createDeleteIndexAction(int status, String message, String id)
+        private IndexAction CreateDeleteIndexAction(int status, String message, String id)
         {
             IndexDeleteAction indexAction = new IndexDeleteAction();
 
@@ -223,6 +243,29 @@ namespace azure_lucene_indexer
    
             return indexAction;
 
+        }
+
+      private IndexAction CreatBulkPutIndexAction(int status, String message, int count)
+        {
+            IndexBulkPutAction indexAction = new IndexBulkPutAction();
+
+            indexAction.Operation = "put (Bulk)";
+            indexAction.Status = status;
+            indexAction.Message = message;
+            indexAction.Count = count;
+   
+            return indexAction;
+
+        }
+
+        public T Deserialize<T>(string input) 
+            where T : class, new()
+        {
+            DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(T));
+            using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(input)))
+            {
+                return ser.ReadObject(stream) as T;
+            }
         }
 
     }

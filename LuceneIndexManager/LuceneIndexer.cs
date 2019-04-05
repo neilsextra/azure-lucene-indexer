@@ -57,7 +57,7 @@ namespace azure_lucene_indexer
         /// </summary>
         /// <param name="indexEntries">Index Entries</param>
 
-        public void AddIndexEntries(IndexEntry[] indexEntries)
+        public void AddIndexEntries(List<IndexEntry> indexEntries)
         {
             foreach (var indexEntry in indexEntries)
             {
@@ -148,7 +148,7 @@ namespace azure_lucene_indexer
             {
 
                 Id = document.Get("Id"),
-                Name = document.Get("Name"),
+                Name = document.Get("Name").ToLower(),
                 Mobile = document.Get("Mobile"),
                 Score = hit.Score
 
